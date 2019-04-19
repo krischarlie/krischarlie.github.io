@@ -1,0 +1,33 @@
+# Add a Spyder dark theme
+# Time: 20190419 15:17:00
+# Environment
+CentOS Linux release 7.5.1804 (Core)
+Anaconda3-5.0.0-Linux-x86_64.sh
+
+# steps
+1.pip install qdarkstyle
+2.find spyder in your Anaconda installation dir**....\Anaconda3\Lib\site-packages\spyder\app**
+3.in /app....find mainwindow.py
+4.open that file with text editor(spyder or any other)
+6.Where all the import statements are(up top) add to the list import qdarkstyle
+7.find{
+    # Selecting Qt4 backend for Enthought Tool Suite (if installed)
+    try:
+        from enthought.etsconfig.api import ETSConfig
+        ETSConfig.toolkit = 'qt4'
+    except ImportError:
+        pass
+}
+8.next line add:
+    # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    try:
+        os.environ['QT_API'] = 'pyqt5'  # I've set here to make things easy, but there is a right place
+        import qdarkstyle
+    except Exception as err:
+        print("Qdarkstyle not found for using black theme:  %s" % err)
+    else:
+        style = qdarkstyle.load_stylesheet_from_environment()
+        app.setStyleSheet(style)
+    # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+9.save
+10.Start Spyder
